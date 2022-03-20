@@ -10,6 +10,6 @@ Sovelluksessa käyttäjä voi selata erilaisia cocktail-reseptejä, tai tehdä n
 - Käyttäjä voi ladata reseptilleen kuvan.
 - Käyttäjä näkee listan (tai ruudukon) resepteistä etusivulla.
 - Ylläpitäjä voi poistaa käyttäjiä ja näiden reseptejä, sekä myös kommentteja.
-- 
+ 
 
 
