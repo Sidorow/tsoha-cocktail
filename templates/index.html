@@ -1,3 +1,11 @@
-<title>Etusivu</title>
-<h1>Etusivu</h1>
-<b>Tervetuloa</b> <i>sovellukseen</i>!
+<h1>Tsoha-Cocktail</h1>
+<br>
+Cocktailit:
+<br>
+<hr>
+{% for recipe in recipes%}
+{{recipe.name}}
+<a href="/cocktail/{{recipe.name}}"> Katso</a>
+<hr>
+{%endfor%}
+<a href="/newcocktail"> Tee uusi cocktail</a>

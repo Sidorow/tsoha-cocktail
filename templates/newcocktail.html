@@ -1,0 +1,6 @@
+Lisää ainesosa:
+<select name="ingredient">
+    {% for ingredient in ingredients %}
+    <option value="{{ingredient}}"> {{ingredient.name}}
+        {% endfor %}
+    </select>
