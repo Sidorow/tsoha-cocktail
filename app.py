@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 
@@ -15,7 +15,7 @@ def index():
     return render_template("index.html", recipes=recipes)
 
 @app.route("/newcocktail")
-def page1():
+def newcocktail():
     result = db.session.execute("SELECT name FROM ingredients")
     ingredients = result.fetchall()
     return render_template("newcocktail.html", ingredients=ingredients)
@@ -27,3 +27,11 @@ def cocktail(cocktailname):
     ingredients = sqlex.fetchone()
     #ingredients = result.split(",")
     return render_template("cocktail.html", cocktailname=cocktailname, ingredients=ingredients)
+
+@app.route("/newing", methods=["POST"])
+def newingredient():
+    new = request.form["ing"]
+    sql = "INSERT INTO ingredients (name) VALUES (:ing)"
+    db.session.execute(sql, {'ing':new})
+    db.session.commit()
+    return redirect("/newcocktail")

@@ -1,6 +1,27 @@
-Lisää ainesosa:
+Valitse ainesosa:
 <select name="ingredient">
     {% for ingredient in ingredients %}
     <option value="{{ingredient}}"> {{ingredient.name}}
         {% endfor %}
     </select>
+<br>
+Lisää uusi ainesosa: 
+<form action="/newing" method="POST">
+    Viinas: <input type="text" name="ing">
+    <br>
+    <input type="submit" value="Lisää">
+</form>
+
+<script>
+    function check(form) {
+        if (form.ing.value.length > 50) {
+            alert("Nimi on liian pitkä");
+            return false;
+        }
+        if (form.ing.value.length < 3) {
+            alert("Nimi on liian lyhyt");
+            return false;
+        }
+        return true;
+    }
+</script>
