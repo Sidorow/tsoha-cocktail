@@ -1,27 +1,47 @@
-Valitse ainesosa:
-<select name="ingredient">
-    {% for ingredient in ingredients %}
-    <option value="{{ingredient}}"> {{ingredient.name}}
+<h1> Tee cocktail </h1>
+<hr>
+<p>
+Lisää viinas:
+<form action="/addalcohol" method="POST">
+<select name="alcohol" method="POST">
+    {% for alcohol in alcohols %}
+    <option value="{{alcohol.name}}"> {{alcohol.name}} </option>
         {% endfor %}
     </select>
-<br>
-Lisää uusi ainesosa: 
-<form action="/newing" method="POST">
-    Viinas: <input type="text" name="ing">
-    <br>
-    <input type="submit" value="Lisää">
+    Määrä senttilitroissa: <input type="number" min="1" value="1" name="amount">
+<input type="submit" value="Lisää">
 </form>
-
-<script>
-    function check(form) {
-        if (form.ing.value.length > 50) {
-            alert("Nimi on liian pitkä");
-            return false;
-        }
-        if (form.ing.value.length < 3) {
-            alert("Nimi on liian lyhyt");
-            return false;
-        }
-        return true;
-    }
-</script>
+<br>
+<p>
+Lisää mixeri:
+<form action="/addmixer" method="POST">
+<select name="mixer" method="POST">
+    {% for mixer in mixers %}
+    <option value="{{mixer.name}}"> {{mixer.name}} </option>
+        {% endfor %}
+    </select>
+    Määrä senttilitroissa: <input type="number" min="1" value="1" name="amount">
+<input type="submit" value="Lisää">
+</form>
+<br>
+<p>
+Etkö löydä etsimääsi ainesoaa? <a href="/addingredient"> Lisää se listalle!</a> 
+<p>
+Juoman rakenne: <br>
+<ol>
+<form action="/newcocktail2">
+{%for ingredient in ingredients%}
+<li>
+    {{ingredient}} 
+    <ul>
+    Määrä: {{ingredients[ingredient]}} cl
+    </ul> 
+    <hr>
+</li>
+{%endfor%}
+<input type="submit" value="Jatka" name="continue">
+</form>
+<form action="/reset"> 
+<input type="submit" value="Palauta" name="reset">
+</form>
+</ol>

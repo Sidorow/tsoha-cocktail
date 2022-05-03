@@ -1,11 +1,21 @@
-<h1>Tsoha-Cocktail</h1>
+<h1>Cockatail</h1>
 <br>
+{% if session.username %}
+<p>{{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<p> Vieras </p>
+<a href="/userlogin"> Kirjaudu sisään</a>
+{% endif %}
+<br>
+<p>
 Cocktailit:
-<br>
+<p>
 <hr>
 {% for recipe in recipes%}
 {{recipe.name}}
 <a href="/cocktail/{{recipe.name}}"> Katso</a>
 <hr>
 {%endfor%}
+<p>
 <a href="/newcocktail"> Tee uusi cocktail</a>

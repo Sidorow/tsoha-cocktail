@@ -1,8 +1,42 @@
 <h1>{{cocktailname}}</h1>
 <br>
+<h3>Kuvaus:</h3>
+{{description.description}}
+<hr>
 Ainesosat: <br>
 {% for ingredient in ingredients%}
-{{ingredient}} <br>
+{{ingredient.name}} <br> 
+Määrä: {{ingredient.amount}} cl <br>
 {%endfor%}
 <hr>
-Kommentteja:
+Arvosteluja:
+{%for review in reviews%}
+<p>
+Käyttäjältä: {{review.name}}
+<br>
+Lähetetty: {{review.date}}
+<br>
+Arvosana: {{review.rating}}/5
+</p>
+<p>{{review.content}}</p>
+<hr>
+{%endfor%}
+<p>
+{% if session.username %}
+<p>{{ session.username }}</p>
+<form action="/leave_review" method="POST">
+    <p>
+        Arvostele cocktail! <br>
+    <input type="radio" name="review_rating" value="1" checked> 1
+    <input type="radio" name="review_rating" value="2"> 2
+    <input type="radio" name="review_rating" value="3"> 3
+    <input type="radio" name="review_rating" value="4"> 4
+    <input type="radio" name="review_rating" value="5"> 5
+    </p>
+    <textarea type="text" rows="4" cols="30" name="review_text"></textarea>
+    <br>
+    <input type="submit" name="review_done" value="Arvostele!">
+</form>
+{% else %}
+<p> Kirjaudu sisään kommentoidaksesi </p>
+{% endif %}
