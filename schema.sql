@@ -1,8 +1,10 @@
-CREATE TABLE users (id SERIAL PRIMARY KEY, username TEXT UNIQUE, password TEXT);
+CREATE TABLE users (id SERIAL PRIMARY KEY, username TEXT UNIQUE, password TEXT, is_admin BOOLEAN);
 
-CREATE TABLE ingredients (id SERIAL PRIMARY KEY, name TEXT);
+CREATE TABLE recipe_ingredient (id SERIAL PRIMARY KEY, ingredient_id INTEGER REFERENCES ingredient(id), recipe_id INTEGER REFERENCES recipes(id), amount INTEGER);
 
-CREATE TABLE recipes (id SERIAL PRIMARY KEY, name TEXT UNIQUE, ingredients TEXT);
+CREATE TABLE ingredients (id SERIAL PRIMARY KEY, name TEXT UNIQUE, is_alc BOOLEAN);
 
-CREATE TABLE reviews (id SERIAL PRIMARY KEY, content TEXT, user_id INTEGER REFERENCES users, sent_at TIMESTAMP);
+CREATE TABLE recipes (id SERIAL PRIMARY KEY, name TEXT UNIQUE, description TEXT);
+
+CREATE TABLE reviews (id SERIAL PRIMARY KEY, content TEXT, user_id INTEGER REFERENCES users(id), recipe_id INTEGER REFERENCES recipes(id), rating INTEGER, sent_at TIMESTAMP);
 
