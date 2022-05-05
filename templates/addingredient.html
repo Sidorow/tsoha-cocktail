@@ -1,25 +1,10 @@
-<form action="/newingredient" method="POST" onsubmit="return check(this)">
+<form action="/newingredient" method="POST">
     <p>
     Viinas vai mixeri?: <br>
     <input type="radio" name="is_alc" value="TRUE" checked> Viinas
     <input type="radio" name="is_alc" value="FALSE"> Mixeri
     <p>
-    Nimi: <input type="text" name="name">
+    Nimi: <input type="text" name="name" minlength="2" maxlength="40" required>
     <p>
     <input type="submit" value="Lisää">
 </form>
-
-<script>
-    function check(form) {
-        if (form.name.value.length > 25) {
-            alert("Nimi on liian pitkä");
-            return false;
-        }
-        if (form.name.value.length < 3) {
-            alert("Nimi on liian lyhyt");
-            return false;
-        }
-        alert(f"{form.name} lisätyy listalle!")
-        return true;
-    }
-</script>

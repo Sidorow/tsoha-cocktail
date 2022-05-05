@@ -11,30 +11,13 @@ Juoman rakenne: <br>
     <hr>
 </li>
 {%endfor%}
-<form action="/makecocktail", method="POST" onsubmit="return check(this)">
+<form action="/makecocktail", method="POST">
 <p>
 Lisää Juomallesi kuvaus! <br>
-<textarea type="text" rows="4" cols="30" name="description"></textarea>
+<textarea type="text" rows="4" cols="30" name="description" required></textarea>
 <p>
 Anna juomallesi eeppinen nimi! <br>
-<input type="text" name="name">
+<input type="text" name="name" minlength="3" required>
 <p>
 <input type="submit" name="finish" value="Valmista!">
 </form>
-
-<script>
-    function check(form) {
-        if (form.name.value.length > 40) {
-            alert("Nimi on liian pitkä");
-            return false;
-        }
-        if (form.name.value.length < 2) {
-            alert("Nimen tulee olla vähintään 2 merkkiä pitkä");
-            return false;
-        }
-        if (form.description.value.length == 0) {
-            alert("Anna juomallesi kuvaus!");
-            return false;
-        return true;
-    }
-</script>

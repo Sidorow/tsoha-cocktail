@@ -1,26 +1,9 @@
-<form action="/createuser" method="POST" onsubmit="return check(this)">
+<form action="/createuser" method="POST">
     <p>Uusi käyttäjätunnus:<br>
-    <input type="text" name="username"></p>
+    <input type="text" name="username" minlength="3" maxlength="25" required></p>
     <p>Salasana:<br>
-    <input type="password" name="password1"></p>
+    <input type="password" name="password1" minlength="6" required></p>
     <p>Salasana uudelleen:<br>
-    <input type="password" name="password2"></p>
+    <input type="password" name="password2" minlength="6" required></p>
     <input type="submit" value="Tee käyttäjä">
 </form>
-
-<script>
-    function check(form) {
-        if (form.username.value.length > 25) {
-            alert("Nimi on liian pitkä");
-            return false;
-        }
-        if (form.username.value.length < 3) {
-            alert("Nimen tulee olla vähintään 3 merkkiä pitkä");
-            return false;
-        }
-        if (form.password1.value.length < 6) {
-            alert("Salasanan tulee olla vähintään 6 merkkiä pitkä");
-            return false;
-        return true;
-    }
-</script>

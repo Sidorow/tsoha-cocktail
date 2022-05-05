@@ -25,3 +25,11 @@ Cocktailit:
 {%endfor%}
 <p>
 <a href="/newcocktail"> Tee uusi cocktail</a>
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}

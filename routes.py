@@ -4,18 +4,14 @@ import users, cocktail
 
 def check_form(form):
     if len(form) <= 2:
-        print("too short")
         return False
     if len(form) > 40:
-        print("too long")
         return False
     return True
 
 def check_user():
     if session.get("username"):
-        print("access granted")
         return True
-    print("access denied, not logged in")
     return False
 
 @app.route("/")
@@ -27,7 +23,8 @@ def index():
 def newcocktail():
     list = cocktail.get_added_ingredients()
     if not check_user():
-        return redirect("/") #todo ilmoita virheestä
+        flash("Sinun tulee olla kirjautuneena sisään tehdäksesi cocktailin.")
+        return redirect("/") 
     ingredients = cocktail.get_ingredient_list()
     return render_template("newcocktail.html", alcohols=ingredients[0], mixers=ingredients[1], ingredients=list)
 
