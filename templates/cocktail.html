@@ -9,6 +9,17 @@ Ainesosat: <br>
 Määrä: {{ingredient.amount}} cl <br>
 {%endfor%}
 <hr>
+
+<p>
+    {% with messages = get_flashed_messages() %}
+       {% if messages %}
+          {% for message in messages %}
+             {{ message }}
+          {% endfor %}
+       {% endif %}
+    {% endwith %}
+</p>
+
 Arvosteluja:
 {%for review in reviews%}
 <p>

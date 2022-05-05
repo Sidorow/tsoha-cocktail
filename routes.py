@@ -32,7 +32,7 @@ def newcocktail():
 def newcocktail2():
     list = cocktail.get_added_ingredients()
     if not check_user():
-        return redirect("/") #todo ilmoita virheestä
+        return redirect("/")
     if len(list) == 0:
         return redirect("newcocktail")
     return render_template("newcocktail2.html", ingredients=list)
@@ -46,8 +46,10 @@ def makecocktail():
         name = request.form["name"]
         desc = request.form["description"]
         if cocktail.makecocktail(name,desc):
+            flash("Cocktaili luotu onnistuneesti!")
             return redirect("/")
         else:
+            flash("Jotain meni pieleen. Varmista että cocktailillasi on uniikki nimi!")
             return redirect("/newcocktail2")
 
 @app.route("/cocktail/<cocktailname>")
@@ -68,8 +70,10 @@ def leave_review():
             if cocktail.leave_review(content, rating):
                 return redirect("/cocktail/" + cocktailname)
             else:
+                flash("Hups! jotain meni pieleen :(")
                 return redirect("/cocktail/" + cocktailname)
-    return redirect("/cocktail/" + cocktailname) #todo ilmoita virheestä
+    flash("Et voi jättää tekstikenttää tyhjäksi!")
+    return redirect("/cocktail/" + cocktailname)
     
 @app.route("/addmixer", methods=["POST", "GET"])
 def addmixer():
@@ -96,7 +100,8 @@ def reset():
 @app.route("/addingredient")
 def addingredient():
     if not check_user():
-        return redirect("/") #todo ilmoita virheestä
+        flash("Sinun tulee olla kirjautuneena sisään!")
+        return redirect("/")
     return render_template("addingredient.html")
 
 @app.route("/newingredient", methods=["POST"])
@@ -104,9 +109,11 @@ def newingredient():
     name = request.form["name"]
     is_alc = request.form["is_alc"]
     if cocktail.newingredient(name, is_alc):
+        flash("Uusi ainesosa lisätty listalle!")
         return redirect("/newcocktail")
     else:
-        return redirect("/newcocktail") #todo ilmoita virheestä
+        flash("Hups, jotain meni pieleen :(. Varmista ettei ainesosaa ole jo olemassa!")
+        return redirect("/newcocktail")
 
 @app.route("/userlogin")
 def userlogin():
@@ -128,12 +135,15 @@ def createuser():
             print("checks passed")
             if password1 == password2:
                 if users.createuser(username, password1):
-                    print("käyttäjä luotu!")
+                    flash("Käyttäjä luotu!")
                     return redirect("/")
+                else:
+                    flash("Jotain meni pieleen tai käyttänimi on jo käytössä")
             else:
-                print("salasanat eivät täsmää")
+                flash("Salasanat eivät täsmää.")
                 return redirect("/newuser")
-    return render_template("newuser.html") #todo ilmoita virheestä
+    flash("Käyttäjänimi tai salasana ei kelpaa")
+    return render_template("newuser.html")
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -143,8 +153,10 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if users.login(username, password):
+            flash("Olet kirjautuneena sisään!")
             return redirect("/")
         else:
+            flash("Tarkista käyttäjänimi tai salasana!")
             return render_template("userlogin.html")
         
 @app.route("/logout")

@@ -1,9 +1,12 @@
 <h2> Hakutulokset hakusanalla {{query}} </h2>
 <hr>
+<br>
 {%for result in results%}
 <p>
+    <br>
     {{result.name}}
     <a href="/cocktail/{{result.name}}"> Katso</a>
+    <hr>
 </p>
 {%endfor%}
 

@@ -6,3 +6,13 @@
 <input type="submit" value="Kirjaudu">
 Tai <a href="/newuser"> Tee käyttäjä<a/>
 </form>
+
+<p>
+    {% with messages = get_flashed_messages() %}
+       {% if messages %}
+          {% for message in messages %}
+             {{ message }}
+          {% endfor %}
+       {% endif %}
+    {% endwith %}
+</p>
