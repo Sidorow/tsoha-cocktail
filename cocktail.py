@@ -1,3 +1,4 @@
+from ctypes import resize
 from db import db
 from flask import session
 
@@ -19,7 +20,7 @@ def makecocktail(name, desc):
     print(added_ingredients)
     try:
         sql0 = "INSERT INTO recipes (name,description) VALUES (:name,:description) RETURNING id"
-        result = db.session.execute(sql0, {"name":name, "description":desc})
+        result = db.session.execute(sql0, {"name":name.capitalize(), "description":desc})
         recipe_id = result.fetchone()
         sql2 = "INSERT INTO recipe_ingredient (ingredient_id, recipe_id, amount) VALUES (:ing_id,:rec_id,:amount)"
         for ingredient in added_ingredients:
@@ -80,8 +81,30 @@ def get_added_ingredients():
 def newingredient(name, is_alc):
     try:
         sql = "INSERT INTO ingredient (name,is_alc) VALUES (:name,:is_alc)"
-        db.session.execute(sql,{"name":name,"is_alc":is_alc})
+        db.session.execute(sql,{"name":name.capitalize(),"is_alc":is_alc})
         db.session.commit()
     except:
         return False
     return True
+
+def search(raw_query):
+    query = raw_query.capitalize()
+    sql0 = "SELECT name FROM recipes WHERE name LIKE :query"
+    result = db.session.execute(sql0, {"query":"%"+query+"%"})
+    results = result.fetchall()
+    if results:
+        return results
+    else:
+        sql1 = "SELECT id FROM ingredient WHERE name LIKE :query"
+        id_result = db.session.execute(sql1, {"query":"%"+query+"%"})
+        id_row = id_result.fetchone()
+        if id_row:
+            id = id_row[0]
+        else:
+            return False
+        sql2 = "SELECT recipes.name FROM recipes JOIN recipe_ingredient ON recipe_ingredient.ingredient_id= (:id) AND recipe_ingredient.recipe_id=recipes.id"
+        result = db.session.execute(sql2, {"id":id})
+        results = result.fetchall()
+        if results:
+            return results
+    return False

@@ -2,14 +2,15 @@ from db import db
 from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-def createuser(username, password1):
-    sql = "INSERT INTO users (name,password,is_admin) VALUES (:name,:password,FALSE)"
-    password = generate_password_hash(password1)
+def createuser(username, password):
+    password = generate_password_hash(password)
     try:
+        sql = "INSERT INTO users (name,password,is_admin) VALUES (:name,:password,FALSE)"
         db.session.execute(sql,{"name":username,"password":password})
         db.session.commit()
     except:
         return False
+    return True
 
 def login(username, password):
     sql = "SELECT id, password FROM users WHERE name=:username"

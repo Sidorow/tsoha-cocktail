@@ -1,4 +1,10 @@
-<h1>Cockatail</h1>
+<h1>Cockatail</h1>  
+<p>
+<form action="/result" method="GET">
+<input type="text" name="query" placeholder="Etsi reseptiä tai ainesosaa...">
+<input type="submit" name="search" value="Etsi">
+</form>
+</p>
 <br>
 {% if session.username %}
 <p>{{ session.username }}</p>

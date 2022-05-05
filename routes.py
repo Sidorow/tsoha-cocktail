@@ -3,14 +3,11 @@ from flask import render_template, redirect, flash, request, session, url_for
 import users, cocktail
 
 def check_form(form):
-    if len(form) <= 3:
+    if len(form) <= 2:
         print("too short")
         return False
     if len(form) > 40:
         print("too long")
-        return False
-    if len(form) == 0:
-        print("empty")
         return False
     return True
 
@@ -139,8 +136,7 @@ def createuser():
             else:
                 print("salasanat eivät täsmää")
                 return redirect("/newuser")
-        else:
-            return render_template("newuser.html") #todo ilmoita virheestä
+    return render_template("newuser.html") #todo ilmoita virheestä
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -157,4 +153,16 @@ def login():
 @app.route("/logout")
 def logout():
     users.logout()
+    return redirect("/")
+
+@app.route("/result", methods=["GET"])
+def result():
+    query = request.args["query"]
+    if check_form(query):
+        if not cocktail.search(query):
+            error = "Valitettavasti haku ei tuottanut tulosta :(."
+            return render_template("result.html", error=error)
+        else:
+            results = cocktail.search(query)
+            return render_template("result.html", results=results)
     return redirect("/")
