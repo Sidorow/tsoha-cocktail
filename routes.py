@@ -160,9 +160,9 @@ def result():
     query = request.args["query"]
     if check_form(query):
         if not cocktail.search(query):
-            error = "Valitettavasti haku ei tuottanut tulosta :(."
-            return render_template("result.html", error=error)
+            error = "Valitettavasti haku ei tuottanut tulosta :(. Kirjoitithan hakusanan oikein?"
+            return render_template("result.html", error=error, query=query)
         else:
             results = cocktail.search(query)
-            return render_template("result.html", results=results)
+            return render_template("result.html", results=results, query=query)
     return redirect("/")
