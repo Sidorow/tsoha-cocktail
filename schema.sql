@@ -1,4 +1,4 @@
-CREATE TABLE users (id SERIAL PRIMARY KEY, username TEXT UNIQUE, password TEXT, is_admin BOOLEAN);
+CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT UNIQUE, password TEXT, is_admin BOOLEAN);
 
 CREATE TABLE recipe_ingredient (id SERIAL PRIMARY KEY, ingredient_id INTEGER REFERENCES ingredient(id) ON DELETE CASCADE, recipe_id INTEGER REFERENCES recipes(id) ON DELETE CASCADE, amount INTEGER);
 
