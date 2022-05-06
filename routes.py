@@ -30,11 +30,11 @@ def newcocktail():
 
 @app.route("/newcocktail2", methods=["GET","POST"])
 def newcocktail2():
-    list = cocktail.get_added_ingredients()
     if not check_user():
         return redirect("/")
+    list = cocktail.get_added_ingredients()
     if len(list) == 0:
-        return redirect("newcocktail")
+        return redirect("/newcocktail")
     return render_template("newcocktail2.html", ingredients=list)
 
 @app.route("/makecocktail", methods=["GET","POST"])
@@ -77,29 +77,29 @@ def leave_review():
     
 @app.route("/addmixer", methods=["POST"])
 def addmixer():
-    mixer = request.form["mixer"]
-    amount = int(request.form["amount"])
-    if cocktail.addmixer(mixer, amount):
-        print("addmixer lisäsi mixerin")
-        return redirect("/newcocktail")
+    if request.method == "POST":
+        mixer = request.form["mixer"]
+        amount = int(request.form["amount"])
+        if cocktail.addmixer(mixer, amount):
+            return redirect("/newcocktail")
     flash("Jotain meni pieleen, yritä uudestaan.")
     return redirect("/newcocktail")
 
 @app.route("/addalcohol", methods=["POST"])
 def addalcohol():
-    alcohol = request.form["alcohol"]
-    amount = int(request.form["amount"])
-    if cocktail.addalcohol(alcohol, amount):
-        print("addalcohol lisäsi alkoholin")
-        return redirect("/newcocktail")
+    if request.method == "POST":
+        alcohol = request.form["alcohol"]
+        amount = int(request.form["amount"])
+        if cocktail.addalcohol(alcohol, amount):
+            return redirect("/newcocktail")
     flash("Jotain meni pieleen, yritä uudestaan.")
     return redirect("/newcocktail")
 
 @app.route("/reset")
 def reset():
-    if cocktail.reset():
-        print("resetoitu!")
-        return redirect("/newcocktail")
+    if request.method == "GET":
+        if cocktail.reset():
+            return redirect("/newcocktail")
     flash("Jotain meni pieleen, yritä uudestaan.")
     return redirect("/newcocktail")
 
@@ -138,7 +138,6 @@ def createuser():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if check_form(username) and check_form(password1):
-            print("checks passed")
             if password1 == password2:
                 if users.createuser(username, password1):
                     flash("Käyttäjä luotu!")
@@ -159,7 +158,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if users.login(username, password):
-            flash("Olet kirjautuneena sisään!")
+            flash("Olet kirjautunut sisään!")
             return redirect("/")
         else:
             flash("Tarkista käyttäjänimi tai salasana!")

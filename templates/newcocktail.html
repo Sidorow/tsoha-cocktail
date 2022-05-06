@@ -3,7 +3,7 @@
 <p>
 Lisää viinas:
 <form action="/addalcohol" method="POST">
-<select name="alcohol" method="POST">
+<select name="alcohol">
     {% for alcohol in alcohols %}
     <option value="{{alcohol.name}}"> {{alcohol.name}} </option>
         {% endfor %}
@@ -15,7 +15,7 @@ Lisää viinas:
 <p>
 Lisää mixeri:
 <form action="/addmixer" method="POST">
-<select name="mixer" method="POST">
+<select name="mixer">
     {% for mixer in mixers %}
     <option value="{{mixer.name}}"> {{mixer.name}} </option>
         {% endfor %}
@@ -38,7 +38,7 @@ Etkö löydä etsimääsi ainesoaa? <a href="/addingredient"> Lisää se listall
     </p>
 Juoman rakenne: <br>
 <ol>
-<form action="/newcocktail2">2
+<form action="/newcocktail2">
 {%for ingredient in ingredients%}
 <li>
     {{ingredient}} 
@@ -50,7 +50,7 @@ Juoman rakenne: <br>
 {%endfor%}
 <input type="submit" value="Jatka" name="continue">
 </form>
-<form action="/reset"> 
+<form action="/reset" method ="GET"> 
 <input type="submit" value="Palauta" name="reset">
 </form>
 </ol>
