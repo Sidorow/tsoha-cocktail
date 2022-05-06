@@ -75,27 +75,30 @@ def leave_review():
     flash("Et voi jättää tekstikenttää tyhjäksi!")
     return redirect("/cocktail/" + cocktailname)
     
-@app.route("/addmixer", methods=["POST", "GET"])
+@app.route("/addmixer", methods=["POST"])
 def addmixer():
     mixer = request.form["mixer"]
     amount = int(request.form["amount"])
     if cocktail.addmixer(mixer, amount):
+        print("addmixer lisäsi mixerin")
         return redirect("/newcocktail")
     flash("Jotain meni pieleen, yritä uudestaan.")
     return redirect("/newcocktail")
 
-@app.route("/addalcohol", methods=["POST", "GET"])
+@app.route("/addalcohol", methods=["POST"])
 def addalcohol():
     alcohol = request.form["alcohol"]
     amount = int(request.form["amount"])
     if cocktail.addalcohol(alcohol, amount):
+        print("addalcohol lisäsi alkoholin")
         return redirect("/newcocktail")
     flash("Jotain meni pieleen, yritä uudestaan.")
     return redirect("/newcocktail")
 
-@app.route("/reset", methods=["POST","GET"])
+@app.route("/reset")
 def reset():
     if cocktail.reset():
+        print("resetoitu!")
         return redirect("/newcocktail")
     flash("Jotain meni pieleen, yritä uudestaan.")
     return redirect("/newcocktail")
