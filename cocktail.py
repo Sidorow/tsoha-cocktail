@@ -67,12 +67,15 @@ def leave_review(content, rating):
     
 def addmixer(mixer, amount):
     added_ingredients[mixer]=amount
+    return True
 
 def addalcohol(alcohol, amount):
     added_ingredients[alcohol]=amount
+    return True
 
 def reset():
     added_ingredients.clear()
+    return True
     
 def get_added_ingredients():
     return added_ingredients
