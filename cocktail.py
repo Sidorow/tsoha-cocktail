@@ -13,7 +13,7 @@ def get_ingredient_list():
     alcohols = sql0.fetchall()
     sql1 = db.session.execute("SELECT name FROM ingredient WHERE is_alc = FALSE ORDER BY name ASC")
     mixers = sql1.fetchall()
-    return alcohols, mixers, added_ingredients
+    return alcohols, mixers
 
 def makecocktail(name, desc):
     print(added_ingredients)

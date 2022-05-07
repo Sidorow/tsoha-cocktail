@@ -20,13 +20,13 @@ def index():
     return render_template("index.html", recipes=recipes)
 
 @app.route("/newcocktail", methods=["GET","POST"])
-def newcocktail():
+def newcocktail(list):
     if not check_user():
         flash("Sinun tulee olla kirjautuneena sisään tehdäksesi cocktailin.")
         return redirect("/")
     list = cocktail.get_added_ingredients() 
-    ingredients = cocktail.get_ingredient_list()
-    return render_template("newcocktail.html", alcohols=ingredients[0], mixers=ingredients[1], ingredients=list)
+    alc_mix = cocktail.get_ingredient_list()
+    return render_template("newcocktail.html", alcohols=alc_mix[0], mixers=alc_mix[1], ingredients=list)
 
 @app.route("/newcocktail2", methods=["GET","POST"])
 def newcocktail2():
