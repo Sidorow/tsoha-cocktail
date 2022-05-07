@@ -2,7 +2,7 @@ from db import db
 from flask import session
 
 def get_cocktails():
-    sql = db.session.execute("SELECT name FROM recipes")
+    sql = db.session.execute("SELECT name, description FROM recipes")
     recipes = sql.fetchall()
     return recipes
 
@@ -24,7 +24,7 @@ def makecocktail(name, desc):
             sql1 = "SELECT id FROM ingredient WHERE name = (:name)"
             sql1ex = db.session.execute(sql1, {"name":ingredient})
             ing_id = sql1ex.fetchone()
-            amount =  added_ingredients[ingredient]#MUOKATTUA
+            amount =  added_ingredients[ingredient]
             db.session.execute(sql2,{"ing_id":ing_id.id,"rec_id":recipe_id.id,"amount":amount})
         db.session.commit()
         return True
@@ -104,7 +104,7 @@ def search(raw_query):
             id = id_row[0]
         else:
             return False
-        sql2 = "SELECT recipes.name FROM recipes JOIN recipe_ingredient ON recipe_ingredient.ingredient_id= (:id) AND recipe_ingredient.recipe_id=recipes.id"
+        sql2 = "SELECT recipes.name, recipes,description FROM recipes JOIN recipe_ingredient ON recipe_ingredient.ingredient_id= (:id) AND recipe_ingredient.recipe_id=recipes.id"
         result = db.session.execute(sql2, {"id":id})
         results = result.fetchall()
         if results:

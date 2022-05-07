@@ -1,4 +1,13 @@
-<h1> Tee cocktail </h1>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-header">
+<h1>
+    <p class="text-center">Tee cocktail</p> 
+</h1>
+</div>
 <hr>
 <p>
 Lisää viinas:
@@ -8,8 +17,10 @@ Lisää viinas:
     <option value="{{alcohol.name}}"> {{alcohol.name}} </option>
         {% endfor %}
     </select>
+    <ul>
     Määrä senttilitroissa: <input type="number" min="1" value="1" name="amount">
-<input type="submit" value="Lisää">
+    </ul>
+<button type="submit" class="btn btn-secondary">Lisää</button>
 </form>
 <br>
 <p>
@@ -20,37 +31,65 @@ Lisää mixeri:
     <option value="{{mixer.name}}"> {{mixer.name}} </option>
         {% endfor %}
     </select>
+    <ul>
     Määrä senttilitroissa: <input type="number" min="1" value="1" name="amount">
-<input type="submit" value="Lisää">
+    </ul>
+<button type="submit" class="btn btn-secondary">Lisää</button>
 </form>
-<br>
+</div>
+</div>
 <p>
-Etkö löydä etsimääsi ainesoaa? <a href="/addingredient"> Lisää se listalle!</a> 
+Etkö löydä etsimääsi ainesosaa? <a href="/addingredient"> Lisää se listalle!</a> 
 <p>
     <p>
-        {% with messages = get_flashed_messages() %}
-           {% if messages %}
-              {% for message in messages %}
-                 {{ message }}
-              {% endfor %}
-           {% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            {%if category == "message"%}
+            <div class="alert alert-success" role="alert">
+                <li class="{{ category }}">{{ message }}</li>
+            </div>
+            {%else%}
+            <div class="alert alert-danger" role="alert">
+                <li class="{{ category }}">{{ message }}</li>
+            </div>
+            {%endif%}
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% endwith %}
     </p>
-Juoman rakenne: <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h3>Juoman rakenne:</h3>
+            </div>
 <ol>
+</p>
 <form action="/newcocktail2">
 {%for ingredient in ingredients%}
 <li>
-    {{ingredient}} 
+    <h4>{{ingredient}}</h4> 
     <ul>
-    Määrä: {{ingredients[ingredient]}} cl
+    <h4>Määrä: {{ingredients[ingredient]}} cl</h4>
     </ul> 
     <hr>
 </li>
 {%endfor%}
-<input type="submit" value="Jatka" name="continue">
-</form>
-<form action="/reset" method ="GET"> 
-<input type="submit" value="Palauta" name="reset">
-</form>
 </ol>
+</div>
+</div>
+<p>
+<button type="submit" class="btn btn-outline-success" name="continue"> Jatka </button>
+</p>
+</form>
+<p>
+<form action="/reset" method ="GET"> 
+<button type="submit" class="btn btn-warning" name="reset">Nollaa</button>
+</form>
+</p>
+<p>
+    <a class="btn btn-primary" href="/"> Takaisin </a>
+</p>
+</div>

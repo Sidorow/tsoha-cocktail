@@ -1,10 +1,46 @@
-<form action="/newingredient" method="POST">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<div class="container">
     <p>
-    Viinas vai mixeri?: <br>
+<form action="/newingredient" method="POST" onsubmit="confirm(this)">
+    <p>
+    <h2>Viinas vai mixeri?:</h2> <br>
+    </p>
     <input type="radio" name="is_alc" value="TRUE" checked> Viinas
     <input type="radio" name="is_alc" value="FALSE"> Mixeri
     <p>
-    Nimi: <input type="text" name="name" minlength="2" maxlength="40" required>
-    <p>
-    <input type="submit" value="Lisää">
+        <div class="form-group">
+            <p>
+                <label for="name">Nimi:</label><br>
+                <input type="text" name="name" minlength="2" maxlength="40" required>
+            </p>
+            </div>
+    </p>
+    <button type="submit" class="btn btn-success">Lisää</button>
 </form>
+</p>
+<p>
+    <a class="btn btn-primary" href="/"> Takaisin </a>
+</p>
+<p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for category, message in messages %}
+        {%if category == "message"%}
+        <div class="alert alert-success" role="alert">
+            <li class="{{ category }}">{{ message }}</li>
+        </div>
+        {%else%}
+        <div class="alert alert-danger" role="alert">
+            <li class="{{ category }}">{{ message }}</li>
+        </div>
+        {%endif%}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</p>
+</div>
+
+<script>
+    

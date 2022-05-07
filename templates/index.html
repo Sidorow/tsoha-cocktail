@@ -1,36 +1,69 @@
-<h1>Cockatail</h1>  
-<p>
-<form action="/result" method="GET">
-<input type="text" name="query" placeholder="Etsi reseptiä tai ainesosaa...">
-<input type="submit" name="search" value="Etsi">
-</form>
-</p>
-<br>
-{% if session.username %}
-<p>{{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
-{% else %}
-<p> Vieras </p>
-<a href="/userlogin"> Kirjaudu sisään</a>
-{% endif %}
-<br>
-<p>
-Cocktailit:
-<p>
-<hr>
-{% for recipe in recipes%}
-{{recipe.name}}
-<a href="/cocktail/{{recipe.name}}"> Katso</a>
-<hr>
-{%endfor%}
-<p>
-<a href="/newcocktail"> Tee uusi cocktail</a>
-<p>
-{% with messages = get_flashed_messages() %}
-   {% if messages %}
-      {% for message in messages %}
-         {{ message }}
-      {% endfor %}
-   {% endif %}
-{% endwith %}
-</p>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-header">
+    <h1>
+        <p class="text-center">Cockatail</p>
+    </h1>
+            </div>
+            {% if session.username %}
+            <p><strong>{{ session.username }}</strong></p>
+            <a class="btn btn-success" href="/logout">Kirjaudu ulos</a>
+            {% else %}
+            <p><strong> Vieras </strong></p>
+            <a class="btn btn-success" href="/userlogin"> Kirjaudu sisään</a>
+            {% endif %}
+    <hr>
+    <nav class="navbar navbar-light bg-light">
+        <form action="/result" class="form-inline" method="GET">
+            <input class="form-control" type="text" name="query" placeholder="Etsi reseptiä tai ainesosaa...">
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" name="search">Etsi</button>
+        </form>
+    </nav>
+    <p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            {%if category == "message"%}
+            <div class="alert alert-success" role="alert">
+                <li class="{{ category }}">{{ message }}</li>
+            </div>
+            {%else%}
+            <div class="alert alert-danger" role="alert">
+                <li class="{{ category }}">{{ message }}</li>
+            </div>
+            {%endif%}
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </p>
+    <p>
+        <h2>
+            <p class="text-center">Cocktailit:</p>
+        </h2>
+        <a class="btn btn-primary" href="/newcocktail"> Tee uusi cocktail</a>
+        <p>
+            <hr>
+            <div class="row row-cols-3">
+                {% for recipe in recipes%}
+                <div class="col">
+                    <div class="card" style="width: 18rem; height: 10rem;">
+                        <div class="card-body" <h2>
+                            <h5 class="card.title">{{recipe.name}}</h5>
+                            </h2>
+                            <p class="card-text"> {{recipe.description}} </p>
+                            <a class="btn btn-primary" href="/cocktail/{{recipe.name}}"> Katso</a>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                {%endfor%}
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
