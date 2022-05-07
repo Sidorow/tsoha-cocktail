@@ -20,7 +20,7 @@ def index():
     return render_template("index.html", recipes=recipes)
 
 @app.route("/newcocktail", methods=["GET","POST"])
-def newcocktail(list):
+def newcocktail():
     if not check_user():
         flash("Sinun tulee olla kirjautuneena sisään tehdäksesi cocktailin.")
         return redirect("/")
