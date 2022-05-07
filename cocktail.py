@@ -1,8 +1,6 @@
 from db import db
 from flask import session
 
-added_ingredients = {}
-
 def get_cocktails():
     sql = db.session.execute("SELECT name FROM recipes")
     recipes = sql.fetchall()
@@ -16,17 +14,17 @@ def get_ingredient_list():
     return alcohols, mixers
 
 def makecocktail(name, desc):
-    print(added_ingredients)
+    added_ingredients = session.get("added_ingredients")
     try:
         sql0 = "INSERT INTO recipes (name,description) VALUES (:name,:description) RETURNING id"
         result = db.session.execute(sql0, {"name":name.capitalize(), "description":desc})
         recipe_id = result.fetchone()
         sql2 = "INSERT INTO recipe_ingredient (ingredient_id, recipe_id, amount) VALUES (:ing_id,:rec_id,:amount)"
-        for ingredient in added_ingredients:
+        for ingredient in session.get("added_ingredients"):
             sql1 = "SELECT id FROM ingredient WHERE name = (:name)"
             sql1ex = db.session.execute(sql1, {"name":ingredient})
             ing_id = sql1ex.fetchone()
-            amount = added_ingredients[ingredient]
+            amount =  added_ingredients[ingredient]#MUOKATTUA
             db.session.execute(sql2,{"ing_id":ing_id.id,"rec_id":recipe_id.id,"amount":amount})
         db.session.commit()
         return True
@@ -66,19 +64,21 @@ def leave_review(content, rating):
     return True
     
 def addmixer(mixer, amount):
+    added_ingredients = session["added_ingredients"]
     added_ingredients[mixer]=amount
-    return True
+    return added_ingredients
 
 def addalcohol(alcohol, amount):
+    added_ingredients = session["added_ingredients"]
     added_ingredients[alcohol]=amount
-    return True
+    return added_ingredients
 
 def reset():
-    added_ingredients.clear()
+    session["added_ingredients"] = {}
     return True
     
 def get_added_ingredients():
-    return added_ingredients
+    return session.get("added_ingredients")
 
 def newingredient(name, is_alc):
     try:

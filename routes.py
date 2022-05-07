@@ -16,6 +16,7 @@ def check_user():
 
 @app.route("/")
 def index():
+    cocktail.reset()
     recipes = cocktail.get_cocktails()
     return render_template("index.html", recipes=recipes)
 
@@ -24,9 +25,9 @@ def newcocktail():
     if not check_user():
         flash("Sinun tulee olla kirjautuneena sisään tehdäksesi cocktailin.")
         return redirect("/")
-    list = cocktail.get_added_ingredients() 
+    ingredients = cocktail.get_added_ingredients() #session.get("added_ingredients")
     alc_mix = cocktail.get_ingredient_list()
-    return render_template("newcocktail.html", alcohols=alc_mix[0], mixers=alc_mix[1], ingredients=list)
+    return render_template("newcocktail.html", alcohols=alc_mix[0], mixers=alc_mix[1], ingredients=ingredients)
 
 @app.route("/newcocktail2", methods=["GET","POST"])
 def newcocktail2():
@@ -39,7 +40,7 @@ def newcocktail2():
 
 @app.route("/makecocktail", methods=["GET","POST"])
 def makecocktail():
-    list = cocktail.get_added_ingredients()
+    list = session.get("added_ingredients") #cocktail.get_added_ingredients()
     if request.method == "GET":
         return render_template("newcocktail2.html", ingredients=list)
     if request.method == "POST":
@@ -81,6 +82,7 @@ def addmixer():
         mixer = request.form["mixer"]
         amount = int(request.form["amount"])
         if cocktail.addmixer(mixer, amount):
+            session["added_ingredients"] = cocktail.addmixer(mixer, amount)
             return redirect("/newcocktail")
     flash("Jotain meni pieleen, yritä uudestaan.")
     return redirect("/newcocktail")
@@ -91,6 +93,7 @@ def addalcohol():
         alcohol = request.form["alcohol"]
         amount = int(request.form["amount"])
         if cocktail.addalcohol(alcohol, amount):
+            session["added_ingredients"] = cocktail.addalcohol(alcohol, amount)
             return redirect("/newcocktail")
     flash("Jotain meni pieleen, yritä uudestaan.")
     return redirect("/newcocktail")
