@@ -2,7 +2,7 @@
 
 <div class="container">
     <p>
-        <form action="/newingredient" method="POST" onsubmit="confirm(this)">
+        <form action="/newingredient" method="POST">
             <p>
                 <h2>Viinas vai mixeri?:</h2> <br>
             </p>
@@ -21,7 +21,7 @@
         </form>
     </p>
     <p>
-        <a class="btn btn-primary" href="/"> Takaisin </a>
+        <a class="btn btn-primary" href="/newcocktail"> Takaisin </a>
     </p>
     <p>
         {% with messages = get_flashed_messages(with_categories=true) %}
