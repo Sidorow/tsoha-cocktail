@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
 <div class="container">
+    <div class="card">
+        <div class="card-body">
     <p>
         <form action="/newingredient" method="POST">
             <p>
@@ -16,7 +18,7 @@
                     </p>
                 </div>
             </p>
-            <button type="submit" class="btn btn-success">Lisää</button>
+            <button type="submit" class="btn btn-success" onclick="return confirm('Oletko varma että haluat lisätä tämän aineksen?')">Lisää</button>
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
     </p>
@@ -41,7 +43,7 @@
         </ul>
         {% endif %}
         {% endwith %}
-    </p>
+        </p>
+        </div>
+    </div>
 </div>
-
-<script>

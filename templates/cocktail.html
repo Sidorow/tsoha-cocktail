@@ -79,7 +79,7 @@
                 <textarea class="form-control" type="text" rows="4" cols="30" name="review_text" required></textarea>
             </div>
             <br>
-            <button type="submit" class="btn btn-primary" name="review_done">Arvostele!</button>
+            <button type="submit" class="btn btn-primary" name="review_done" onclick="return confirm('Oletko varma?')">Arvostele!</button>
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form> 
                 {% else %} <p class="text-center">Kirjaudu sisään kommentoidaksesi</p>

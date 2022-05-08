@@ -34,7 +34,7 @@
                             <input type="text" name="name" minlength="3" required></p>
                     </div>
                     <p>
-                        <button type="submit" class="btn btn-success" name="finish">Valmista!</button>
+                        <button type="submit" class="btn btn-success" name="finish" onclick="return confirm('Oletko varma?')">Valmista!</button>
                         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                 </form>
                 </p>
