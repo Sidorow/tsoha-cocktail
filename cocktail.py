@@ -2,7 +2,7 @@ from db import db
 from flask import session
 
 def get_cocktails():
-    sql = db.session.execute("SELECT name, description FROM recipes")
+    sql = db.session.execute("SELECT id, name, description FROM recipes")
     recipes = sql.fetchall()
     return recipes
 
@@ -16,7 +16,7 @@ def get_ingredient_list():
 def makecocktail(name, desc):
     added_ingredients = session.get("added_ingredients")
     try:
-        sql0 = "INSERT INTO recipes (name,description) VALUES (:name,:description) RETURNING id"
+        sql0 = "INSERT INTO recipes (name, description) VALUES (:name,:description) RETURNING id"
         result = db.session.execute(sql0, {"name":name.capitalize(), "description":desc})
         recipe_id = result.fetchone()
         sql2 = "INSERT INTO recipe_ingredient (ingredient_id, recipe_id, amount) VALUES (:ing_id,:rec_id,:amount)"

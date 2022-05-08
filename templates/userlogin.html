@@ -2,42 +2,42 @@
 
 <div class="container">
     <p>
-<form action="/login" method="POST">
-    <div class="form-group">
-    <p><label for="username">Käyttäjätunnus:</label><br>
-        <input type="text" name="username" required></p>
-    </div>
-    <div class="form-group">
-    <p><label for="password">Salasana:</label><br>
-        <input type="password" name="password" required></p>
-    </div>
-    <div class="form-gorup">
-    <button type="submit" class="btn btn-success">Kirjaudu</button>
-    Tai <a href="/newuser"> Tee käyttäjä<a />
-</form>
-</p>
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <p><label for="username">Käyttäjätunnus:</label><br>
+                    <input type="text" name="username" required></p>
+            </div>
+            <div class="form-group">
+                <p><label for="password">Salasana:</label><br>
+                    <input type="password" name="password" required></p>
+            </div>
+            <div class="form-gorup">
+                <button type="submit" class="btn btn-success">Kirjaudu</button>
+                Tai <a href="/newuser"> Tee käyttäjä<a />
+        </form>
+    </p>
 
-<p>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <ul class=flashes>
-        {% for category, message in messages %}
-        {%if category == "message"%}
-        <div class="alert alert-success" role="alert">
-            <li class="{{ category }}">{{ message }}</li>
-        </div>
-        {%else%}
-        <div class="alert alert-danger" role="alert">
-            <li class="{{ category }}">{{ message }}</li>
-        </div>
-        {%endif%}
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-</p>
+    <p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            {%if category == "message"%}
+            <div class="alert alert-success" role="alert">
+                <li class="{{ category }}">{{ message }}</li>
+            </div>
+            {%else%}
+            <div class="alert alert-danger" role="alert">
+                <li class="{{ category }}">{{ message }}</li>
+            </div>
+            {%endif%}
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </p>
 
-<p>
-    <a class="btn btn-primary" href="/"> Takaisin </a>
-</p>
+    <p>
+        <a class="btn btn-primary" href="/"> Takaisin </a>
+    </p>
 </div>

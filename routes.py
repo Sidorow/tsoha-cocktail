@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, redirect, flash, request, session
+from flask import abort, render_template, redirect, flash, request, session
 import users, cocktail
 
 def check_form(form):
@@ -40,6 +40,8 @@ def newcocktail2():
 
 @app.route("/makecocktail", methods=["GET","POST"])
 def makecocktail():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     list = session.get("added_ingredients") #cocktail.get_added_ingredients()
     if request.method == "GET":
         return render_template("newcocktail2.html", ingredients=list)
@@ -61,7 +63,11 @@ def cocktail_info(cocktailname):
 
 @app.route("/leave_review", methods=["POST", "GET"])
 def leave_review():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     cocktailname = session.get("current_cocktail")
+    if not check_user():
+        return redirect("/cocktail" + cocktailname)
     if request.method == "GET":
         return redirect("/cocktail/" + cocktailname)
     if request.method == "POST":
@@ -80,8 +86,8 @@ def leave_review():
 def addmixer():
     if request.method == "POST":
         mixer = request.form["mixer"]
-        if int(request.form["amount"]):
-            amount = request.form["amount"]
+        if request.form["amount"]:
+            amount = int(request.form["amount"])
         else:
             amount = 1
         if cocktail.addmixer(mixer, amount):
@@ -121,6 +127,8 @@ def addingredient():
 
 @app.route("/newingredient", methods=["POST"])
 def newingredient():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     name = request.form["name"]
     is_alc = request.form["is_alc"]
     if cocktail.newingredient(name, is_alc):

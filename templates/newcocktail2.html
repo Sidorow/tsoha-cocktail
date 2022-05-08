@@ -1,62 +1,65 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
 <div class="container">
     <div class="card">
         <div class="card-body">
             <div class="card-header">
-<h1>
-    <p class="text-center">Viimeistele cocktail</p>
-</h1>
-</div>
-<hr>
-<h4>Juoman rakenne:</h4>
- <br>
-<ol>
-{%for ingredient in ingredients%}
-<li>
-    <h4>{{ingredient}}</h4> 
-    <ul>
-    <h4>Määrä: {{ingredients[ingredient]}} cl</h4>
-    </ul> 
-    <hr>
-</li>
-{%endfor%}
-<form action="/makecocktail", method="POST">
-<p>
-<div class="form-group">
-    <p><label for="description">Lisää juomallesi kuvaus!</label>
-    <textarea class="form-control" type="text" rows="4" cols="30" name="description" required></textarea>
-    </div>
-</p>
-<div class="form-group">
-    <p><label for="name">Anna juomallesi eeppinen nimi!</label><br>
-        <input type="text" name="name" minlength="3" required></p>
-    </div>
-<p>
-<button type="submit" class="btn btn-success" name="finish">Valmista!</button>
-</form>
-</p>
-<p>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <ul class=flashes>
-        {% for category, message in messages %}
-        {%if category == "message"%}
-        <div class="alert alert-success" role="alert">
-            <li class="{{ category }}">{{ message }}</li>
+                <h1>
+                    <p class="text-center">Viimeistele cocktail</p>
+                </h1>
+            </div>
+            <hr>
+            <h4>Juoman rakenne:</h4>
+            <br>
+            <ol>
+                {%for ingredient in ingredients%}
+                <li>
+                    <h4>{{ingredient}}</h4>
+                    <ul>
+                        <h4>Määrä: {{ingredients[ingredient]}} cl</h4>
+                    </ul>
+                    <hr>
+                </li>
+                {%endfor%}
+                <form action="/makecocktail" , method="POST">
+                    <p>
+                        <div class="form-group">
+                            <p><label for="description">Lisää juomallesi kuvaus!</label>
+                                <textarea class="form-control" type="text" rows="4" cols="30" name="description"
+                                    required></textarea>
+                        </div>
+                    </p>
+                    <div class="form-group">
+                        <p><label for="name">Anna juomallesi eeppinen nimi!</label><br>
+                            <input type="text" name="name" minlength="3" required></p>
+                    </div>
+                    <p>
+                        <button type="submit" class="btn btn-success" name="finish">Valmista!</button>
+                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                </form>
+                </p>
+                <p>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    <ul class=flashes>
+                        {% for category, message in messages %}
+                        {%if category == "message"%}
+                        <div class="alert alert-success" role="alert">
+                            <li class="{{ category }}">{{ message }}</li>
+                        </div>
+                        {%else%}
+                        <div class="alert alert-danger" role="alert">
+                            <li class="{{ category }}">{{ message }}</li>
+                        </div>
+                        {%endif%}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
+                </p>
+                <p>
+                    <a class="btn btn-primary" href="/newcocktail"> Takaisin </a>
+                </p>
         </div>
-        {%else%}
-        <div class="alert alert-danger" role="alert">
-            <li class="{{ category }}">{{ message }}</li>
-        </div>
-        {%endif%}
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-</p>
-<p>
-    <a class="btn btn-primary" href="/newcocktail"> Takaisin </a>
-</p>
-</div>
-</div>
+    </div>
 </div>

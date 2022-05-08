@@ -3,32 +3,30 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-
-<h2> Hakutulokset hakusanalla {{query}} </h2>
-<hr>
-<p>
-    <a class="btn btn-primary" href="/"> Takaisin </a>
-</p>
-<br>
-<p>
-    <div class="row row-cols-3">
-        {% for result in results%}
-        <div class="col">
-            <div class="card" style="width: 18rem; height: 10rem;">
-                <div class="card-body" <h2>
-                    <h5 class="card.title">{{result.name}}</h5>
-                    </h2>
-                    <p class="card-text"> {{result.description}} </p>
-                    <a class="btn btn-primary" href="/cocktail/{{result.name}}"> Katso</a>
-                </div>
-            </div>
+            <h2> Hakutulokset hakusanalla {{query}} </h2>
+            <hr>
+            <p>
+                <a class="btn btn-primary" href="/"> Takaisin </a>
+            </p>
             <br>
+            <p>
+                <div class="row row-cols-3">
+                    {% for result in results%}
+                    <div class="col">
+                        <div class="card" style="width: 18rem; height: 10rem;">
+                            <div class="card-body" <h2>
+                                <h5 class="card.title">{{result.name}}</h5>
+                                </h2>
+                                <p class="card-text"> {{result.description}} </p>
+                                <a class="btn btn-primary" href="/cocktail/{{result.name}}"> Katso</a>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    {%endfor%}
+                </div>
+            </p>
+            {{error}}
         </div>
-        {%endfor%}
     </div>
-</p>
-
-{{error}}
-</div>
-</div>
 </div>

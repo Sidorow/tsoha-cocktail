@@ -4,90 +4,91 @@
     <div class="card">
         <div class="card-body">
             <div class="card-header">
-<h1>
-    <p class="text-center">Tee cocktail</p> 
-</h1>
-</div>
-<hr>
-<p>
-Lisää viinas:
-<form action="/addalcohol" method="POST">
-<select name="alcohol">
-    {% for alcohol in alcohols %}
-    <option value="{{alcohol.name}}"> {{alcohol.name}} </option>
-        {% endfor %}
-    </select>
-    <ul>
-    Määrä senttilitroissa: <input type="number" min="1" value="1" name="amount">
-    </ul>
-<button type="submit" class="btn btn-secondary">Lisää</button>
-</form>
-<br>
-<p>
-Lisää mixeri:
-<form action="/addmixer" method="POST">
-<select name="mixer">
-    {% for mixer in mixers %}
-    <option value="{{mixer.name}}"> {{mixer.name}} </option>
-        {% endfor %}
-    </select>
-    <ul>
-    Määrä senttilitroissa: <input type="number" min="1" value="1" name="amount">
-    </ul>
-<button type="submit" class="btn btn-secondary">Lisää</button>
-</form>
-</div>
-</div>
-<p>
-Etkö löydä etsimääsi ainesosaa? <a href="/addingredient"> Lisää se listalle!</a> 
-<p>
+                <h1>
+                    <p class="text-center">Tee cocktail</p>
+                </h1>
+            </div>
+            <hr>
+            <p>
+                Lisää viinas:
+                <form action="/addalcohol" method="POST">
+                    <select name="alcohol">
+                        {% for alcohol in alcohols %}
+                        <option value="{{alcohol.name}}"> {{alcohol.name}} </option>
+                        {% endfor %}
+                    </select>
+                    <ul>
+                        Määrä senttilitroissa: <input type="number" min="1" value="1" name="amount">
+                    </ul>
+                    <button type="submit" class="btn btn-secondary">Lisää</button>
+                </form>
+                <br>
+                <p>
+                    Lisää mixeri:
+                    <form action="/addmixer" method="POST">
+                        <select name="mixer">
+                            {% for mixer in mixers %}
+                            <option value="{{mixer.name}}"> {{mixer.name}} </option>
+                            {% endfor %}
+                        </select>
+                        <ul>
+                            Määrä senttilitroissa: <input type="number" min="1" value="1" name="amount">
+                        </ul>
+                        <button type="submit" class="btn btn-secondary">Lisää</button>
+                    </form>
+        </div>
+    </div>
     <p>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <ul class=flashes>
-            {% for category, message in messages %}
-            {%if category == "message"%}
-            <div class="alert alert-success" role="alert">
-                <li class="{{ category }}">{{ message }}</li>
-            </div>
-            {%else%}
-            <div class="alert alert-danger" role="alert">
-                <li class="{{ category }}">{{ message }}</li>
-            </div>
-            {%endif%}
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-    </p>
-    <div class="card">
-        <div class="card-body">
-            <div class="card-title">
-                <h3>Juoman rakenne:</h3>
-            </div>
-<ol>
-</p>
-<form action="/newcocktail2">
-{%for ingredient in ingredients%}
-<li>
-    <h4>{{ingredient}}</h4> 
-    <ul>
-    <h4>Määrä: {{ingredients[ingredient]}} cl</h4>
-    </ul> 
-    <hr>
-</li>
-{%endfor%}
-</ol>
+        Etkö löydä etsimääsi ainesosaa? <a href="/addingredient"> Lisää se listalle!</a>
+        <p>
+            <p>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <ul class=flashes>
+                    {% for category, message in messages %}
+                    {%if category == "message"%}
+                    <div class="alert alert-success" role="alert">
+                        <li class="{{ category }}">{{ message }}</li>
+                    </div>
+                    {%else%}
+                    <div class="alert alert-danger" role="alert">
+                        <li class="{{ category }}">{{ message }}</li>
+                    </div>
+                    {%endif%}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </p>
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3>Juoman rakenne:</h3>
+                    </div>
+                    <ol>
+        </p>
+        <form action="/newcocktail2">
+            {%for ingredient in ingredients%}
+            <li>
+                <h4>{{ingredient}}</h4>
+                <ul>
+                    <h4>Määrä: {{ingredients[ingredient]}} cl</h4>
+                </ul>
+                <hr>
+            </li>
+            {%endfor%}
+            </ol>
 </div>
 </div>
 <p>
-<button type="submit" class="btn btn-outline-success" name="continue"> Jatka </button>
+    <button type="submit" class="btn btn-outline-success" name="continue"> Jatka </button>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </p>
 </form>
 <p>
-<form action="/reset" method ="GET"> 
-<button type="submit" class="btn btn-warning" name="reset">Nollaa</button>
-</form>
+    <form action="/reset" method="GET">
+        <button type="submit" class="btn btn-warning" name="reset">Nollaa</button>
+    </form>
 </p>
 <p>
     <a class="btn btn-primary" href="/"> Takaisin </a>

@@ -4,25 +4,25 @@
     <div class="card">
         <div class="card-body">
             <div class="card-header">
-    <h1>
-        <p class="text-center">{{cocktailname}}</p>
-    </h1>
-</div>
-    <br>
-    <h3>Kuvaus:</h3>
-    {{description.description}}
-    <hr>
-    <h4>Ainesosat:</h4>
-    {% for ingredient in ingredients%}
-    <li>
-        <strong>{{ingredient.name}}</strong> <br>
-        Määrä: {{ingredient.amount}} cl <br>
-        <hr>
-    </li>
-    {%endfor%}
-    <hr>
-</div>
-</div>
+                <h1>
+                    <p class="text-center">{{cocktailname}}</p>
+                </h1>
+            </div>
+            <br>
+            <h3>Kuvaus:</h3>
+            {{description.description}}
+            <hr>
+            <h4>Ainesosat:</h4>
+            {% for ingredient in ingredients%}
+            <li>
+                <strong>{{ingredient.name}}</strong> <br>
+                Määrä: {{ingredient.amount}} cl <br>
+                <hr>
+            </li>
+            {%endfor%}
+            <hr>
+        </div>
+    </div>
 
     <p>
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -54,8 +54,8 @@
         <div class="card">
             <h5 class="card-header">{{review.name}}</h5>
             <div class="card-body">
-              <h5 class="card-title">{{review.rating}}/5</h5>
-              <p class="card-text">{{review.content}}</p>
+                <h5 class="card-title">{{review.rating}}/5</h5>
+                <p class="card-text">{{review.content}}</p>
             </div>
             <div class="card-footer text-muted">
                 {{review.date}}
@@ -76,12 +76,10 @@
                 <input type="radio" name="review_rating" value="5"> 5
             </p>
             <div class="form-group">
-            <textarea class="form-control" type="text" rows="4" cols="30" name="review_text" required></textarea>
+                <textarea class="form-control" type="text" rows="4" cols="30" name="review_text" required></textarea>
             </div>
             <br>
-            <button type="submit" class="btn btn-primary" name="review_done">Arvostele!</button!
-        </form>
-        {% else %}
-        <p> Kirjaudu sisään kommentoidaksesi </p>
-        {% endif %}
+            <button type="submit" class="btn btn-primary" name="review_done">Arvostele!</button! </form> 
+                {% else %} <p class="text-center">Kirjaudu sisään kommentoidaksesi</p>
+    {% endif %}
 </div>
